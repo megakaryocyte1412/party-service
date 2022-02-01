@@ -42,4 +42,14 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(email, password);
     }
+
+    @Override
+    public String
+
+    toString() {
+        return "UserEntity{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

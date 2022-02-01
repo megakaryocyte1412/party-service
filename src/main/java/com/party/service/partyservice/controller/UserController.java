@@ -40,8 +40,8 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseEntity<DefaultApiResponse> login(@RequestBody @Valid UserRequest userRequest) {
-        MultiValueMap<String, String> headers = new HttpHeaders();
-        if (userRequest.getEmail().equals("test@ex") && userRequest.getPassword().equals("password")) {
+        UserEntity userEntity = userRepository.findById(userRequest.getEmail()).orElse(null);
+        if (userEntity != null && userRequest.getPassword().equals(userEntity.getPassword())) {
             DefaultApiResponse defaultApiResponse = new DefaultApiResponse();
             defaultApiResponse.setStatusCode("0000");
             defaultApiResponse.setStatusDesc("Success");
@@ -64,6 +64,7 @@ public class UserController {
             UserEntity user = new UserEntity();
             user.setEmail(userRequest.getEmail());
             user.setPassword(userRequest.getPassword());
+            log.info(user.toString());
             userRepository.save(user);
 
             DefaultApiResponse defaultApiResponse = new DefaultApiResponse();
