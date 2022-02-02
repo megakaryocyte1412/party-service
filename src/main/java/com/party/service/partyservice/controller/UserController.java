@@ -7,12 +7,10 @@ import com.party.service.partyservice.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -37,6 +35,7 @@ public class UserController {
     List<UserEntity> getUser() {
         return userRepository.findAll();
     }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     ResponseEntity<DefaultApiResponse> login(@RequestBody @Valid UserRequest userRequest) {
