@@ -1,21 +1,18 @@
 package com.party.service.partyservice.configuration;
 
-import com.party.service.partyservice.model.entity.UserEntity;
-import com.party.service.partyservice.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Component
+@Configuration
+@ConfigurationProperties("test")
 public class InitialConfig {
+    private String message;
 
-    @Autowired
-    private UserRepository userRepository;
+    public String getMessage() {
+        return message;
+    }
 
-    public InitialConfig(){
-        //test adding initial data
-
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

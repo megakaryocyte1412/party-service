@@ -1,5 +1,6 @@
 package com.party.service.partyservice.controller;
 
+import com.party.service.partyservice.configuration.InitialConfig;
 import com.party.service.partyservice.model.DefaultApiResponse;
 import com.party.service.partyservice.model.UserRequest;
 import com.party.service.partyservice.model.entity.UserEntity;
@@ -24,13 +25,21 @@ import java.util.List;
 @RequestMapping("/rest/api/user")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-
     Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Autowired
+    private InitialConfig initialConfig;
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody
+    String getTest() {
+        return initialConfig.getMessage();
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     List<UserEntity> getUser() {
         return userRepository.findAll();
