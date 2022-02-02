@@ -51,6 +51,7 @@ public class PartyController {
             PartyEntity partyEntity = new PartyEntity();
             partyEntity.setPartyId(partyId);
             partyEntity.setPartyName(request.getPartyName());
+            partyEntity.setCurrentMember(1);
             partyEntity.setMemberLimit(request.getMemberLimit());
             partyEntity.setOwnerEmail(request.getOwnerEmail());
             partyEntity.setLastUpdateDatetime(LocalDateTime.now());
