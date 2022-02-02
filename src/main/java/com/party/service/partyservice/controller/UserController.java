@@ -78,7 +78,7 @@ public class UserController {
             DefaultApiResponse defaultApiResponse = new DefaultApiResponse();
             defaultApiResponse.setStatusCode("0000");
             defaultApiResponse.setStatusDesc("Success");
-            return new ResponseEntity<>(defaultApiResponse, HttpStatus.OK);
+            return new ResponseEntity<>(defaultApiResponse, HttpStatus.CREATED);
         } catch (Exception ex) {
             DefaultApiResponse defaultApiResponse = new DefaultApiResponse();
             defaultApiResponse.setStatusCode("9999");
