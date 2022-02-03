@@ -16,4 +16,12 @@ public class PasswordUtil {
     public Boolean doPasswordsMatch(String rawPassword, String encodedPassword) {
         return passwordEcorder.matches(rawPassword, encodedPassword);
     }
+
+//        public String bcryptEncryptor(String plainText) {
+//        return plainText;
+//    }
+//
+//    public Boolean doPasswordsMatch(String rawPassword, String encodedPassword) {
+//        return rawPassword.equals(encodedPassword);
+//    }
 }
