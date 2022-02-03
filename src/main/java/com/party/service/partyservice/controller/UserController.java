@@ -1,10 +1,11 @@
 package com.party.service.partyservice.controller;
 
-import com.party.service.partyservice.configuration.InitialConfig;
+import com.party.service.partyservice.configuration.AuthenConfig;
 import com.party.service.partyservice.model.DefaultApiResponse;
 import com.party.service.partyservice.model.UserRequest;
 import com.party.service.partyservice.model.entity.UserEntity;
 import com.party.service.partyservice.repository.UserRepository;
+import com.party.service.partyservice.util.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private InitialConfig initialConfig;
+    private AuthenConfig authenConfig;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody
-    String getTest() {
-        return initialConfig.getMessage();
-    }
+    @Autowired
+    private PasswordUtil passwordUtil;
+
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
@@ -49,7 +48,7 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<DefaultApiResponse> login(@RequestBody @Valid UserRequest userRequest) {
         UserEntity userEntity = userRepository.findById(userRequest.getEmail()).orElse(null);
-        if (userEntity != null && userRequest.getPassword().equals(userEntity.getPassword())) {
+        if (userEntity != null && passwordUtil.doPasswordsMatch(userRequest.getPassword(), userEntity.getPassword())) {
             DefaultApiResponse defaultApiResponse = new DefaultApiResponse();
             defaultApiResponse.setStatusCode("0000");
             defaultApiResponse.setStatusDesc("Success");
@@ -71,7 +70,7 @@ public class UserController {
         try {
             UserEntity user = new UserEntity();
             user.setEmail(userRequest.getEmail());
-            user.setPassword(userRequest.getPassword());
+            user.setPassword(passwordUtil.bcryptEncryptor(userRequest.getPassword()));
             log.info(user.toString());
             userRepository.save(user);
 
@@ -86,5 +85,6 @@ public class UserController {
             return new ResponseEntity<>(defaultApiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }

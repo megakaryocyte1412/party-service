@@ -8,10 +8,19 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
   spring:
     h2:
-      console.enabled: true
+      console.enabled: false
 
 logging:
   path: logs
+  level:
+    org:
+      springframework:
+        web: DEBUG
 
-test:
-  message: local-message
+authentication:
+  username: 'user123'
+  password: '{noop}P@ssw0rd'
+
+
+
+
